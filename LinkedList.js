@@ -26,6 +26,7 @@ class LinkedList {
 
     if (!this.head){
       this.head = node
+      this.size++
       return true  
     } else {
       current = this.head
@@ -44,14 +45,18 @@ class LinkedList {
 
   // insert by index
   insertAt(data, index){
-    if (index > this.size - 1 || index < 0){
-      return false;
-    }
-
-    // if it is first
     if (index === 0){
       this.insertFirst(data)
       return true
+    }
+
+    if (index === this.size){
+      this.insertLast(data)
+      return true
+    }
+
+    if (index > this.size - 1 || index < 0){
+      return false;
     }
 
     const node = new Node(data)
@@ -69,7 +74,6 @@ class LinkedList {
     previous.next = node
 
     this.size++
-
     return true
   }
 
@@ -82,15 +86,15 @@ class LinkedList {
     if (index < 0 || index > this.size - 1){
       return false
     }
-
+    let count = 0;
+    let previous;
+    let current = this.head;
     if (index === 0){
-      this.head = null
+      this.head = current.next;
+      this.size--
       return true
     }
-    let count = 0;
-    let current = this.head;
-    let previous;
-
+    
     while(count < index){
       previous = current
       current = current.next
@@ -98,7 +102,7 @@ class LinkedList {
     }
 
     previous.next = current.next
-    current.next = null
+    this.size--
     return true
 
   }
